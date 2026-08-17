@@ -1,0 +1,26 @@
+# Self-contained editorconfig for animated-neutron-stars-with-starfield (team repo)
+# IMPORTANT: root = true prevents inheritance - teammates may not have custom $HOME config
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+tab_width = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = off
+
+# Markdown — trailing whitespace is significant (two spaces = <br>)
+[*.md]
+trim_trailing_whitespace = false
+indent_size = unset
+
+# Shell scripts
+[*.sh]
+switch_case_indent = true
+space_redirects    = false
+keep_padding       = true
+
+# CSS — inherits 2-space from [*]

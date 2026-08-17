@@ -1,0 +1,174 @@
+/* Firefox-specific: Standard Firefox sidebar (bookmarks/history) */
+/* This targets the built-in Firefox sidebar (Ctrl+B), not extensions or custom setups */
+
+#sidebar-box {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Use ::before pseudo-element for starfield (like Zen's ::after approach) */
+#sidebar-box::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+
+  /* Fade stars as they drift - creates natural appearance/disappearance */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 5%,
+    rgba(0, 0, 0, 0.7) 15%,
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.8) 75%,
+    rgba(0, 0, 0, 0.5) 85%,
+    rgba(0, 0, 0, 0.2) 92%,
+    transparent 100%
+  ) !important;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 5%,
+    rgba(0, 0, 0, 0.7) 15%,
+    rgba(0, 0, 0, 1) 30%,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.8) 75%,
+    rgba(0, 0, 0, 0.5) 85%,
+    rgba(0, 0, 0, 0.2) 92%,
+    transparent 100%
+  ) !important;
+  mask-size: 200% 100% !important;
+  -webkit-mask-size: 200% 100% !important;
+  mask-position: 0% 0% !important;
+  -webkit-mask-position: 0% 0% !important;
+  mask-repeat: repeat-x !important;
+  -webkit-mask-repeat: repeat-x !important;
+
+  /* Starfield background - reduced to 8 layers for less density */
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.88) 0.53px, transparent 0.53px),
+    radial-gradient(circle, rgba(135, 206, 250, 0.92) 3.96px, transparent 3.96px),
+    radial-gradient(circle, rgba(255, 215, 0, 0.79) 1.53px, transparent 1.53px),
+    radial-gradient(circle, rgba(255, 99, 71, 0.94) 0.6px, transparent 0.6px),
+    radial-gradient(circle, rgba(147, 112, 219, 0.7) 1.18px, transparent 1.18px),
+    radial-gradient(circle, rgba(255, 182, 193, 0.57) 3.12px, transparent 3.12px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.98) 1.73px, transparent 1.73px),
+    radial-gradient(circle, rgba(64, 224, 208, 0.55) 1.05px, transparent 1.05px) !important;
+
+  background-repeat: repeat !important;
+  background-size:
+    120px 200px, 140px 200px, 130px 200px, 150px 200px, 125px 200px,
+    145px 200px, 135px 200px, 160px 200px !important;
+
+  /* Use transform animation for true horizontal movement */
+  /* background-position with repeat causes wrapping - horizontal movement is invisible */
+  animation:
+    starfieldSlideFirefoxSidebar var(--mod-animatedneutronstars-driftSpeed, 300s) infinite linear,
+    starShimmer1 1.2s infinite ease-in-out,
+    starShimmer2 1.8s 0.3s infinite ease-in-out,
+    starShimmer3 2.1s 0.7s infinite ease-in-out,
+    starShimmer4 1.5s 0.5s infinite ease-in-out,
+    starShimmer5 2.4s 0.9s infinite ease-in-out !important;
+}
+
+/* Firefox sidebar-specific transform animation */
+/* Moves the entire background layer horizontally using transform instead of background-position */
+/* This avoids the wrapping issue and creates visible diagonal motion */
+@keyframes starfieldSlideFirefoxSidebar {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(3000px);
+  }
+}
+
+/* Ensure sidebar content stays visible above background */
+#sidebar > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Shimmer/twinkle effect for stars */
+@keyframes starShimmer1 {
+  0% {
+    filter: brightness(1) drop-shadow(0 0 0px rgba(255, 255, 255, 0.5));
+  }
+  20% {
+    filter: brightness(0.4) drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+  }
+  40% {
+    filter: brightness(1.8) drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  }
+  60% {
+    filter: brightness(0.6) drop-shadow(0 0 1px rgba(255, 255, 255, 0.4));
+  }
+  80% {
+    filter: brightness(2.2) drop-shadow(0 0 6px rgba(255, 255, 255, 1));
+  }
+  100% {
+    filter: brightness(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+  }
+}
+
+@keyframes starShimmer2 {
+  0% {
+    filter: brightness(1.2) drop-shadow(0 0 1px rgba(255, 255, 255, 0.6));
+  }
+  30% {
+    filter: brightness(0.5) drop-shadow(0 0 0px rgba(255, 255, 255, 0.2));
+  }
+  50% {
+    filter: brightness(2.0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.95));
+  }
+  100% {
+    filter: brightness(1.2) drop-shadow(0 0 1px rgba(255, 255, 255, 0.6));
+  }
+}
+
+@keyframes starShimmer3 {
+  0%, 100% {
+    filter: brightness(0.8) drop-shadow(0 0 0px rgba(255, 255, 255, 0.4));
+  }
+  25% {
+    filter: brightness(2.5) drop-shadow(0 0 7px rgba(255, 255, 255, 1));
+  }
+  75% {
+    filter: brightness(0.3) drop-shadow(0 0 0px rgba(255, 255, 255, 0.1));
+  }
+}
+
+@keyframes starShimmer4 {
+  0% {
+    filter: brightness(1.5) drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+  }
+  35% {
+    filter: brightness(0.7) drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+  }
+  70% {
+    filter: brightness(1.9) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+  }
+  100% {
+    filter: brightness(1.5) drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+  }
+}
+
+@keyframes starShimmer5 {
+  0%, 100% {
+    filter: brightness(1.1) drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+  }
+  15% {
+    filter: brightness(0.4) drop-shadow(0 0 0px rgba(255, 255, 255, 0.2));
+  }
+  45% {
+    filter: brightness(2.3) drop-shadow(0 0 6px rgba(255, 255, 255, 1));
+  }
+  85% {
+    filter: brightness(0.6) drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+  }
+}
